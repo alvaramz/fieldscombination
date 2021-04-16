@@ -33,8 +33,42 @@ public class Compresor {
         return entrada;
     }
     
-    public void descomprimirArchivoZip(String rutaArchivoZip, String rutaSalida){
+    public String descomprimirArchivoZip(String rutaArchivoZip, String rutaSalida)throws FileNotFoundException, IOException{
+        String nombreCarpetaCreada = null;
+        File archivoZip = new File(rutaArchivoZip);        
+        File directorioSalida = new File(rutaSalida);        
         
+        if(!archivoZip.exists() || !archivoZip.canRead()){            
+             throw new FileNotFoundException("El archivo ZIP especificado no existe o no puede ser leído.");
+        }
+        
+        if(!directorioSalida.exists() || !directorioSalida.canWrite()){            
+             throw new FileNotFoundException("La ruta de salida no existe o no puede escribirse.");
+        }
+        
+        ZipEntry entrada;
+        ZipInputStream streamEntrada = new ZipInputStream(new FileInputStream(archivoZip));
+        
+        // Antes de continuar crea el directorio contenedor
+        File directorioDescomprimido = new File(directorioSalida.getAbsolutePath() + File.separator + archivoZip.getName().replaceAll("\\.","_"));
+        
+        // Lee cada entrada del zip para escribirla descomprimida.
+        entrada = streamEntrada.getNextEntry();
+        while(entrada != null){
+
+            if(entrada.isDirectory()){
+                 File salida = new File(directorioDescomprimido.getAbsolutePath() + File.separator + entrada.getName());
+                 salida.createNewFile();
+            }
+
+            // Continúa la lectura de archivos.
+            entrada = streamEntrada.getNextEntry();
+        }
+
+        streamEntrada.close();
+        nombreCarpetaCreada = directorioSalida.getAbsolutePath();
+        
+        return nombreCarpetaCreada;
     } 
     
 }

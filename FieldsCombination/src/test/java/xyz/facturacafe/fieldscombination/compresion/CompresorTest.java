@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import xyz.facturacafe.fieldscombination.Editor;
+import xyz.facturacafe.fieldscombination.edicion.Editor;
 
 /**
  * Clase para pruebas de la clase Compresor.
@@ -44,14 +44,24 @@ public class CompresorTest {
         String rutaArchivoZip = "O:\\archivos\\fc-ejemplo.docx";
         String rutaEntrada = Editor.RECURSO_PRICIPAL_WORD;
         
-        //Method metodo = Compresor.class.getDeclaredMethod("obtenerEntradaArchivo", String.class, String.class);
-        //metodo.setAccessible(true);
-        
-        Compresor instance = new Compresor();        
-        //ZipEntry result = (ZipEntry)metodo.invoke(instance, rutaArchivoZip, rutaEntrada);
+        Compresor instance = new Compresor(); 
         ZipEntry result = instance.obtenerEntradaArchivo(rutaArchivoZip, rutaEntrada);
                        
         assertNotNull(result);        
+    }
+
+    /**
+     * Prueba el método descomprimirArchivoZip.
+     */
+    @Test
+    public void testDescomprimirArchivoZip() throws Exception {
+        System.out.println("descomprimirArchivoZip");
+        String rutaArchivoZip = "O:\\archivos\\fc-ejemplo.docx";
+        String rutaSalida = "O:\\archivos\\temp";
+        Compresor instance = new Compresor();
+        String expResult = "";
+        String result = instance.descomprimirArchivoZip(rutaArchivoZip, rutaSalida);
+        assertNotNull(result);
     }
     
 }

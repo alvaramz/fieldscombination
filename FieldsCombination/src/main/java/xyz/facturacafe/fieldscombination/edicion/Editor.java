@@ -1,5 +1,5 @@
 
-package xyz.facturacafe.fieldscombination;
+package xyz.facturacafe.fieldscombination.edicion;
 
 /**
  * Clase que proporciona la edición de los documentos de word.
